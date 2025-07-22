@@ -1,0 +1,133 @@
+{% extends "inventory_management/base.html" %}
+
+
+{% block title %}Xhard Form{% endblock  %}
+
+
+{% block content %}
+<form meathod = "POST">
+   {% csrf_token %}
+  {{form.as_p}}
+
+   <button type="submit">Submit</button>
+</form>
+{% endblock  %}
+
+
+{% comment %} {% extends "inventory_management/base.html" %}
+
+{% block title %}Xhard Form{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2>Enter Product Details</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="alphaNumber" class="form-label">Alpha Numeric Code</label>
+      <select id="alphaNumber" name="alpha_number" class="form-select" required>
+        <option value="" selected disabled>Select Alpha Number</option>
+        {% for alpha in alpha_numbers %}
+          <option value="{{ alpha }}">{{ alpha }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder="Enter quantity" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<!-- Include jQuery and Select2 JS/CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#alphaNumber').select2({
+      placeholder: 'Select Alpha Number',
+      allowClear: true,
+      width: 'resolve'
+    });
+  });
+</script>
+{% endblock %} {% endcomment %}
+
+
+{% comment %} {% extends "inventory_management/base.html" %}
+
+{% block title %}Xhard Form{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2>Enter Product Details</h2>
+  <form method="POST">
+  {% csrf_token %}
+  <div class="mb-3">
+     <label for="alphaNumber" class="form-label">Alpha Numeric Code</label>
+      <select id="alphaNumber" name="alpha_number" class="form-select" required style="width: 100%;">
+        <option value="" selected disabled>Select Alpha Number</option>
+        {% for alpha in alpha_numbers %}
+          <option value="{{ alpha }}">{{ alpha }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="mb-3">
+   <label for="quantity" class="form-label">Quantity</label>
+      <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder="Enter quantity" required />
+    {{ form.quantity }}
+  </div>
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+  {% comment %} <form method="post" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="alphaNumber" class="form-label">Alpha Numeric Code</label>
+      <select id="alphaNumber" name="alpha_number" class="form-select" required style="width: 100%;">
+        <option value="" selected disabled>Select Alpha Number</option>
+        {% for alpha in alpha_numbers %}
+          <option value="{{ alpha }}">{{ alpha }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+  
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="number" name="quantity" id="quantity" min="1" class="form-control" placeholder="Enter quantity" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button> 
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+ <button type="submit" class="btn btn-primary">Submit</button> 
+</form> 
+
+</div>
+
+<!-- Include jQuery and Select2 JS/CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#alphaNumber').select2({
+      placeholder: 'Select Alpha Number',
+      allowClear: true,
+      width: 'resolve'
+    });
+  });
+</script>
+{% endblock %} {% endcomment %}
