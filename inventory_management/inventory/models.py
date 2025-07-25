@@ -27,3 +27,8 @@ class ProjectType(models.Model) :
     def __str__(self):
         return self.type
 
+
+class AssemblyProduct(models.Model):
+    alpha_number = models.CharField(max_length=100, unique=True)
+    bap_number = models.CharField(max_length=100 , unique=True)
+    quantity = models.PositiveBigIntegerField(default=0)

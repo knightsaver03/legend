@@ -109,140 +109,94 @@ def remove_user_view(request):
 def inventoryLogin_view(request):
     return render(request, 'inventory_management/inventoryhome.html')
 
+# from django.shortcuts import render, redirect
+# from .forms import AddExhardForm
+# from .models import ExardProduct
+# import pandas as pd
+
 # def exhardForm_view(request):
-#     if request.method == 'POST':
-#         form = AddProductForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('Product_list')
-#     else :
-#         form = AddProductForm()
-#         return render(request, 'inventory_management/exhardForm.html', {'form': form})
-# def exhardForm_view(request):
-#     excel_path = "C:/Users/SVE1NA/Documents/legend/inventory_management/data/master_data.xlsx"
-#     df = pd.read_excel(excel_path, engine='openpyxl')
-#     alpha_numbers = df['AlphaNumber'].dropna().unique().tolist()
+#     # excel_path = r"C:/Users/navne/Downloads/legend/legend/inventory_management/data/master_data.xlsx"
+#     # df = pd.read_excel(excel_path, engine='openpyxl')
+#     # alpha_number_list = df['AlphaNumber'].dropna().unique().tolist()
 
-#     if request.method == 'POST':
-#         form = AddProductForm(request.POST)
-#         if form.is_valid():
-#             form.save()  # <-- saves to DB
-#             return redirect('exhardForm')  # redirect to avoid form re-submission
-#     else:
-#         form = AddProductForm()
+#     # if request.POST:
+#     #     form = AddExhardForm(request.POST)
+#     #     if form.is_valid():
 
-#     return render(request, 'inventory_management/exhardForm.html', {
-#         'form': form,
-#         'alpha_numbers': alpha_umbers,
-#     })
+#     #         print("Hi there ")
+#     #         alpha_number = request.POST.get['alpha_number']
+#     #         added_quantity = request.POST.get['quantity']
 
+#     #         # Try to get the product from the database
+#     #         product, created = ExardProduct.objects.get_or_create(alpha_number=alpha_number)
+#     #         product.quantity += added_quantity
+#     #         product.save()
 
+#     #         return redirect('exhardForm')
+#     # else:
+#     #     form = AddExhardForm()
 
-# def update_exhard(request, product_id):
-#     product = get_object_or_404(ExardProduct, id=product_id)
-#     if request.method == 'POST':
-#         form = AddProductForm(requnest.POST, instance=product)
-#         if form.is_valid():
-#             form.save()  # updates the existing book record
-#             return redirect('Product_list')
-#     else:
-#         form = AddProductForm(instance=product)
 #     return render(request, 'inventory_management/exhardForm.html', {'form': form})
 
 
+from django.shortcuts import render, redirect
+from .models import ExardProduct
+from .forms import AddExhardForm
+
+def exhardForm_view(request):
+    excel_path = r"C:/Users/navne/Downloads/legend/legend/inventory_management/data/master_data.xlsx"
+    df = pd.read_excel(excel_path, engine='openpyxl')
+    alpha_numbers = df['AlphaNumber'].dropna().unique().tolist()
+
+    
+    if request.method == 'POST':
+        form = AddExhardForm(request.POST)
+        if form.is_valid():
+
+            print("Ho ter")
+            # Get the product and quantity to add
+            product = form.cleaned_data['alpha_number']
+            added_quantity = form.cleaned_data['quantity']
+            # Update the product's quantity
+            product.quantity += added_quantity
+            product.save()
+            return redirect('exhardForm')  # Redirect to the same form after success
+    else:
+        form = AddExhardForm()
+    return render(request, 'inventory_management/exhardForm.html', {'form': form})
 
 
-
-
-
-# # views.py
-# import os
-# import pandas as pd
-# from django.conf import settings
-# from django.shortcuts import render
-
-
-# def xhard_form_view(request):
-#     excel_path = "C:/Users/SVE1NA/Documents/legend/inventory_management/data/master_data.xlsx"
-#     df = pd.read_excel(excel_path, engine='openpyxl')
-#     alpha_numbers = df['AlphaNumber'].dropna().unique().tolist()
-
-#     # print("Alpha Numbers are :")
-#     # print(alpha_numbers)
-
-#     if request.method == 'POST':
-#         selected_alpha = request.POST.get('alpha_number')
-#         quantity = request.POST.get('quantity')
-#         # Handle form submission logic here
-#         print(f"AlphaNumber: {selected_alpha}, Quantity: {quantity}")
-
-#     return render(request, 'inventory_management/exhardForm.html', {
-#         'alpha_numbers': alpha_numbers,
-#     })
-
-
-# views.py
 from django.shortcuts import render, redirect
 from .forms import AddExhardForm
 from .models import ExardProduct
 import pandas as pd
 
-
-# def exhardForm_view(request):
-#     excel_path = r"C:/Users/navne/Downloads/legend/legend/inventory_management/data/master_data.xlsx"
-#     if os.path.exists(excel_path):
-#         df = pd.read_excel(excel_path, engine='openpyxl')
-#         alpha_numbers = df['AlphaNumber'].dropna().unique().tolist()
-
-#     if request.method == 'POST':
-#         form = AddExhardForm(request.POST)
-#         if form.is_valid():
-#             product = form.cleaned_data['alpha_number']
-#             added_quantity = request.POST.get['quantity']
-
-#             product.quantity += added_quantity
-#             product.save()
-#             form.save()
-#             messages.success(request, f"Added {added_quantity} to {product.alpha_number}. New quantity: {product.quantity}")
-#             return redirect('exhard_form') 
-#     else:
-#         form = AddExhardForm()
-
-
-#     ExardProduct=ExardProduct.objects.create(
-#         alpha_number='alpha_number',  # Replace with actual data or leave empty
-#         quantity = 'quantity'  # Default quantity, can be adjusted as needed
-#     )
-
-#     return render(request, 'inventory_management/exhardForm.html', {'form': form})
-
 def exhardForm_view(request):
-    print("Hi there ")
-    excel_path = r"C:/Users/navne/Desktop/backend/legend/inventory_management/data/master_data.xlsx"
-    if os.path.exists(excel_path):
-        df = pd.read_excel(excel_path, engine='openpyxl')
-        alpha_numbers = df['AlphaNumber'].dropna().unique().tolist()
+    excel_path = r"C:/Users/navne/Downloads/legend/legend/inventory_management/data/master_data.xlsx"
+    df = pd.read_excel(excel_path, engine='openpyxl')
+    alpha_number_list = df['AlphaNumber'].dropna().unique().tolist()
 
-    if request.POST:        
-
-        form = AddExhardForm(request.POST)
-        if form.is_valid():
-            print("Form is valid")
-            form.save()
-            return redirect('exhard_form')
-    return render(request, 'inventory_management/exhardForm.html', {'form': AddExhardForm()})
-
-
-def upload_excel_view(request):
     if request.POST:
         form = AddExhardForm(request.POST)
-        print(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('exhard_form')
-        else:
-            print(form.errors)
 
-    else: 
+            print("Hi there ")
+            alpha_number = request.POST.get['alpha_number']
+            added_quantity = request.POST.get['quantity']
+
+            # Try to get the product from the database
+            product, created = ExardProduct.objects.get_or_create(alpha_number=alpha_number)
+            product.quantity += added_quantity
+            product.save()
+
+            return redirect('exhardForm')
+    else:
         form = AddExhardForm()
-    return render(request, 'inventory_management/upload_excel.html', {'form':form})
+
+    return render(request, 'inventory_management/exhardForm.html', {'form': form})
+
+
+
+
+
+
